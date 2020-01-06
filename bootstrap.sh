@@ -1,33 +1,16 @@
 #!/usr/bin/env bash
-MYSQL_PASSWORD='VG1234!@#$'
-
-### !!!!!!!!!! DO NOT UNCOMMENT THESE LINES THEY INSTALL WRONG PASSENGER VERSION !!!!!!!!!!!!! ###
-#apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
-#apt-get install apt-transport-https ca-certificates
-##### !!!! Only add ONE of these lines, not all of them !!!! #####
-# Ubuntu 14.04
-#echo 'deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main' > /etc/apt/sources.list.d/passenger.list
-# Ubuntu 12.04
-#echo 'deb https://oss-binaries.phusionpassenger.com/apt/passenger precise main' > /etc/apt/sources.list.d/passenger.list
-#chown root: /etc/apt/sources.list.d/passenger.list
-#chmod 600 /etc/apt/sources.list.d/passenger.list
 
 #install needed modules via apt
 if [ ! -f /var/log/aptsetup ];
 then
 
-debconf-set-selections <<< "mysql-server mysql-server/root_password password $MYSQL_PASSWORD"
-debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $MYSQL_PASSWORD"
+apt-get update
+apt-get upgrade -y
+apt-get autoremove -y
 
-apt update
-apt upgrade -y
-apt autoremove -y
+apt-get install nginx-full -y
 
-apt install nginx-full -y
-echo "ServerName localhost" | tee /etc/apache2/httpd.conf > /dev/null
-echo "Include httpd.conf" | tee -a /etc/apache2/apache2.conf > /dev/null
-
-apt install -y \
+apt-get install -y \
        mariadb-server \
        php7.2 php7.2-common php7.2-cli php7.2-fpm \
        php-mysql php-gd php-curl php-pear php-json php-bcmath php-dev php-iconv php-intl php-mbstring php-opcache php-pdo php-soap php-xml php-zip \
